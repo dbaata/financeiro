@@ -163,11 +163,41 @@ textarea {
   background: var(--danger);
 }
 
+a.button {
+  display: inline-block;
+}
+
 .actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr)) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.actions-field {
+  align-content: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-toolbar {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.table-toolbar h2 {
+  margin: 0;
 }
 
 .table-wrap {
@@ -193,6 +223,56 @@ th {
   font-size: 13px;
 }
 
+.row-actions {
+  min-width: 116px;
+  white-space: nowrap;
+}
+
+.row-actions form {
+  display: inline;
+}
+
+.table-action {
+  align-items: center;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  color: var(--primary);
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  margin-right: 6px;
+  padding: 0;
+  text-decoration: none;
+  width: 30px;
+}
+
+.table-action-icon {
+  fill: none;
+  height: 16px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 16px;
+}
+
+.table-action.danger {
+  background: #fee4e2;
+  border-color: #fecdca;
+  color: var(--danger);
+}
+
+.table-action:hover {
+  background: #dbe4ff;
+}
+
+.table-action.danger:hover {
+  background: #fecdca;
+}
+
 .muted {
   color: var(--muted);
 }
@@ -213,6 +293,26 @@ th {
   background: #fff7ed;
 }
 
+.detail-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-item {
+  display: grid;
+  gap: 4px;
+}
+
+.detail-item span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.detail-item strong {
+  font-weight: 600;
+}
+
 @media (max-width: 860px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -223,7 +323,14 @@ th {
   }
 
   .grid-4,
-  .grid-2 {
+  .grid-2,
+  .detail-grid,
+  .filters {
     grid-template-columns: 1fr;
+  }
+
+  .table-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

@@ -18,3 +18,7 @@ export async function saveInvestment(formData: FormData) {
   if (data.id) return prisma.investment.update({ where: { id: data.id }, data: payload });
   return prisma.investment.create({ data: payload });
 }
+
+export async function deleteInvestment(id: string) {
+  return prisma.investment.update({ where: { id }, data: { deletedAt: new Date() } });
+}

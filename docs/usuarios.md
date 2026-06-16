@@ -16,7 +16,9 @@ Usuarios inativos nao autenticam. A edicao de usuario so altera a senha quando o
 
 ## Funcionalidades
 
-Listar, criar, editar por Server Action e inativar usuarios. A listagem usa DTO sem `passwordHash`.
+Listar em grid inicial com filtros por texto e situacao, criar, editar por Server Action e inativar usuarios pela acao da linha. A listagem usa DTO sem `passwordHash`.
+
+As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
 
 ## Implementacao
 

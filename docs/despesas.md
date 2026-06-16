@@ -18,7 +18,9 @@ Contas a pagar podem apontar para uma despesa cadastrada ou criar uma nova despe
 
 ## Funcionalidades
 
-Listar, criar, editar e inativar despesas. A inativacao preserva contas historicas vinculadas.
+Listar em grid inicial com filtros por texto e situacao, criar, editar e inativar despesas pela acao da linha. A inativacao preserva contas historicas vinculadas.
+
+As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
 
 ## Implementacao
 

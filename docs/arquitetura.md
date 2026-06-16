@@ -20,6 +20,8 @@ Rotas privadas sao marcadas como dinamicas para evitar consultas ao banco durant
 
 O usuario acessa `/login`, informa login e senha, e o Auth.js valida o hash armazenado. O `proxy.ts` protege as rotas privadas. Dentro da area privada, o usuario navega por dashboard, usuarios, despesas, contas a pagar e investimentos.
 
+Todos os modulos privados seguem o mesmo fluxo de navegacao: a primeira tela e sempre um grid de listagem com filtros padroes do dominio. A partir do grid, o usuario escolhe inserir, editar, excluir ou abrir detalhes. Telas de detalhe, criacao e edicao nao devem ser a entrada inicial do modulo.
+
 ## Setup de banco
 
 `npm run db:create` cria o banco se necessario. `npx prisma migrate dev --name <nome>` cria e aplica migrations. `npm run prisma:seed` cria o usuario administrador inicial. `npm run db:check` verifica as tabelas principais sem expor dados sensiveis.

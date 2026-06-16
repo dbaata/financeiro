@@ -24,7 +24,9 @@ Total do mes soma todas as contas do mes. Total pago soma contas pagas. Total pe
 
 ## Funcionalidades
 
-Filtrar por mes, listar contas, criar, editar, excluir logicamente, marcar como paga, marcar como nao paga e duplicar mes anterior.
+Filtrar por mes, texto e status, listar contas em grid inicial, criar, editar, excluir logicamente, marcar como paga, marcar como nao paga e duplicar mes anterior.
+
+As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
 
 ## Implementacao
 

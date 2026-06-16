@@ -74,4 +74,6 @@ npx prisma validate
 
 A documentacao do projeto fica em `docs`. O arquivo `AGENTS.md` contem instrucoes para agentes e colaboradores automatizados.
 
+Padrao de navegacao dos modulos: todo modulo existente ou novo deve abrir primeiro em um grid com filtros padroes. Detalhes, criacao e edicao devem abrir somente depois de uma acao do grid.
+
 Este projeto nao executa commit ou push automaticamente.

@@ -8,6 +8,10 @@ Rotas e pastas usam kebab-case quando expostas na URL. Funcoes e variaveis usam 
 
 Cada dominio deve ter actions em `src/modules`, regras em `src/services` e consultas persistentes em `src/repositories`.
 
+Todos os modulos privados, existentes e novos, devem abrir primeiro em um grid de listagem com filtros padroes. A tela de detalhe, criacao ou edicao so deve ser aberta depois de uma acao explicita no grid.
+
+O grid deve ter filtros adequados ao dominio, mantendo como base: busca textual quando houver campo descritivo, filtro de situacao/status quando existir, e filtros temporais quando o modulo for mensal ou por data. Acoes de inserir, editar e excluir devem ficar no inicio das linhas quando houver tabela. Formularios de criacao e edicao podem ser exibidos na propria rota por parametro de URL, por exemplo `acao=novo` ou `editar=<id>`.
+
 ## Services
 
 Services concentram regras de negocio, validacoes server-side e composicao de operacoes Prisma. Server Actions devem ser finas.
@@ -32,4 +36,6 @@ Antes de concluir alteracoes, rode `npm run lint`, `npm run typecheck` e `npx pr
 
 ## Novo modulo
 
-Criar schema Prisma, repository, service, actions, pagina privada, validacoes, componentes especificos e documentacao em `/docs`. Atualize tambem `AGENTS.md` se a mudanca alterar comandos, setup ou regras operacionais.
+Criar schema Prisma, repository, service, actions, pagina privada, validacoes, componentes especificos e documentacao em `/docs`.
+
+A pagina privada de um novo modulo deve seguir obrigatoriamente o fluxo: grid inicial com filtros padroes, acoes no inicio da linha e abertura posterior de detalhes, criacao ou edicao. Atualize tambem `AGENTS.md` se a mudanca alterar comandos, setup ou regras operacionais.

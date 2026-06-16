@@ -10,6 +10,7 @@ Guia operacional para agentes e colaboradores que forem alterar este projeto.
 - Nao exponha senha, hash de senha ou valores sensiveis de `.env` em logs, telas ou respostas.
 - Preserve o padrao de variaveis separadas de banco: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_SCHEMA`.
 - Para Prisma 7, mantenha `prisma.config.ts` como fonte de configuracao da CLI e use `@prisma/adapter-pg` no runtime.
+- Todos os modulos existentes e novos devem abrir primeiro em um grid de listagem com filtros padroes. Telas de detalhe, criacao ou edicao devem abrir somente depois de uma acao do grid.
 
 ## Comandos principais
 
@@ -46,6 +47,7 @@ npm run dev
 - Repositories concentram consultas de leitura comuns.
 - Validacoes de entrada usam Zod em `src/lib/validations.ts`.
 - Exclusoes funcionais devem preferir `deletedAt`, salvo decisao explicita em contrario.
+- O fluxo padrao de UI dos modulos privados e: grid inicial com filtros, acoes no inicio da linha e abertura posterior da tela de detalhes/formulario.
 
 ## Banco de dados
 
