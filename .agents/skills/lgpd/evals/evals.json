@@ -1,0 +1,29 @@
+{
+  "skill_name": "lgpd",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Revise uma nova tela de cadastro de clientes para um sistema financeiro brasileiro. Ela coleta nome, CPF, email, telefone, renda mensal, foto do documento, profissao e consentimento generico para marketing e compartilhamento com parceiros. Quero saber riscos LGPD e requisitos de produto antes de desenvolver.",
+      "expected_output": "A product/privacy review in Portuguese with data inventory, roles, candidate legal bases, risks, minimization recommendations, consent concerns, vendor/sharing questions, retention/security requirements, and acceptance criteria.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Monte um checklist para responder a um titular que pediu acesso, correcao e exclusao dos dados pessoais dele. A empresa usa CRM, sistema financeiro e planilhas compartilhadas com o time comercial.",
+      "expected_output": "A practical LGPD data subject request workflow covering identity verification, classification, system search, legal exceptions, response content, evidence, deadlines to validate, and records.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Um fornecedor de analytics americano vai receber eventos do nosso SaaS com user_id, email, plano contratado, paginas acessadas e eventos de conversao. Analise a contratacao pela LGPD e liste clausulas e controles que devo exigir.",
+      "expected_output": "A vendor and international-transfer oriented LGPD analysis with controller/operator role questions, purpose limitation, minimization, transfer validation, subprocessors, security, incident notice, deletion/return, audit evidence, and privacy notice implications.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Vou criar um CRUD de fornecedores e outro de funcionarios no sistema. Os grids terao filtros, exportacao CSV, tela de detalhes, edicao e exclusao funcional. Aplique LGPD no desenho desses CRUDs e diga o que precisa virar requisito.",
+      "expected_output": "A CRUD-focused LGPD review for existing and new modules, covering grid minimization, filters, access control, forms, required/optional fields, export controls, logs, retention/delete behavior, documentation, and acceptance criteria.",
+      "files": []
+    }
+  ]
+}
