@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "db:create": "tsx scripts/create-database.ts",
     "db:check": "tsx scripts/check-database.ts",
+    "db:check-admin": "tsx scripts/check-admin-login.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "tsx prisma/seed.ts"

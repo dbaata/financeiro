@@ -9,18 +9,24 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-  const login = process.env.ADMIN_LOGIN ?? "admin";
-  const email = process.env.ADMIN_EMAIL ?? "admin@example.com";
-  const password = process.env.ADMIN_PASSWORD ?? "admin123";
+  const login = "admin";
+  const email = "admin@example.com";
+  const passwordHash = await hash("admin123", 12);
 
   await prisma.user.upsert({
     where: { login },
-    update: {},
+    update: {
+      email,
+      name: "Administrador",
+      status: "ACTIVE",
+      deletedAt: null,
+      passwordHash
+    },
     create: {
       login,
       email,
-      name: process.env.ADMIN_NAME ?? "Administrador",
-      passwordHash: await hash(password, 12)
+      name: "Administrador",
+      passwordHash
     }
   });
 }

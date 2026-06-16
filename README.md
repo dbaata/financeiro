@@ -31,13 +31,11 @@ DB_PASSWORD="postgres"
 DB_SCHEMA="public"
 AUTH_SECRET="change-me-with-openssl-rand-base64-32"
 AUTH_TRUST_HOST="true"
-ADMIN_LOGIN="admin"
-ADMIN_NAME="Administrador"
-ADMIN_EMAIL="admin@example.com"
-ADMIN_PASSWORD="admin123"
 ```
 
-3. Crie o banco, gere o Prisma Client, aplique as migrations e crie o usuario admin:
+O usuario inicial e criado pelo seed com login `admin` e senha `admin123`.
+
+3. Crie o banco, gere o Prisma Client, aplique as migrations e crie ou resete o usuario admin:
 
 ```bash
 npm run db:create
