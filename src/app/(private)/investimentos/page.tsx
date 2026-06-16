@@ -28,6 +28,53 @@ export default async function InvestmentsPage({ searchParams }: PageProps) {
     return matchesSearch && matchesStatus;
   });
 
+  if (viewing) {
+    return (
+      <>
+        <div className="header"><div><h1>Investimentos</h1><p className="muted">Cadastro inicial para evolucao do modulo.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>Visualizar investimento</h2><Link className="button secondary" href="/investimentos">Voltar</Link></div>
+          <div className="detail-grid">
+            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
+            <div className="detail-item"><span>Tipo</span><strong>{viewing.type}</strong></div>
+            <div className="detail-item"><span>Instituicao</span><strong>{viewing.institution}</strong></div>
+            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
+            <div className="detail-item"><span>Valor aplicado</span><strong>{formatCurrency(viewing.amount.toString())}</strong></div>
+            <div className="detail-item"><span>Data da aplicacao</span><strong>{formatDate(viewing.applicationDate)}</strong></div>
+            <div className="detail-item"><span>Data de vencimento</span><strong>{formatDate(viewing.maturityDate)}</strong></div>
+            <div className="detail-item"><span>Rentabilidade</span><strong>{viewing.profitability ?? "-"}</strong></div>
+            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativo" : "Resgatado"}</strong></div>
+            <div className="detail-item"><span>Observacao</span><strong>{viewing.notes ?? "-"}</strong></div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (showForm) {
+    return (
+      <>
+        <div className="header"><div><h1>Investimentos</h1><p className="muted">Cadastro inicial para evolucao do modulo.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>{editing ? "Editar investimento" : "Novo investimento"}</h2><Link className="button secondary" href="/investimentos">Voltar</Link></div>
+          <form className="form grid grid-2" action={upsertInvestment}>
+            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
+            <Input label="Tipo" name="type" defaultValue={editing?.type ?? ""} required />
+            <Input label="Instituicao" name="institution" defaultValue={editing?.institution ?? ""} required />
+            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
+            <Input label="Valor aplicado" name="amount" type="number" step="0.01" min="0.01" defaultValue={editing?.amount.toString() ?? ""} required />
+            <Input label="Data da aplicacao" name="applicationDate" type="date" defaultValue={editing?.applicationDate.toISOString().slice(0, 10) ?? ""} required />
+            <Input label="Data de vencimento" name="maturityDate" type="date" defaultValue={editing?.maturityDate?.toISOString().slice(0, 10) ?? ""} />
+            <Input label="Rentabilidade" name="profitability" defaultValue={editing?.profitability ?? ""} />
+            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
+            <Textarea label="Observacao" name="notes" defaultValue={editing?.notes ?? ""} />
+            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
+          </form>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="header"><div><h1>Investimentos</h1><p className="muted">Cadastro inicial para evolucao do modulo.</p></div></div>
@@ -58,41 +105,6 @@ export default async function InvestmentsPage({ searchParams }: PageProps) {
           </table>
         </div>
       </section>
-      {viewing ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>Visualizar investimento</h2><Link className="button secondary" href="/investimentos">Voltar</Link></div>
-          <div className="detail-grid">
-            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
-            <div className="detail-item"><span>Tipo</span><strong>{viewing.type}</strong></div>
-            <div className="detail-item"><span>Instituicao</span><strong>{viewing.institution}</strong></div>
-            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
-            <div className="detail-item"><span>Valor aplicado</span><strong>{formatCurrency(viewing.amount.toString())}</strong></div>
-            <div className="detail-item"><span>Data da aplicacao</span><strong>{formatDate(viewing.applicationDate)}</strong></div>
-            <div className="detail-item"><span>Data de vencimento</span><strong>{formatDate(viewing.maturityDate)}</strong></div>
-            <div className="detail-item"><span>Rentabilidade</span><strong>{viewing.profitability ?? "-"}</strong></div>
-            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativo" : "Resgatado"}</strong></div>
-            <div className="detail-item"><span>Observacao</span><strong>{viewing.notes ?? "-"}</strong></div>
-          </div>
-        </section>
-      ) : null}
-      {showForm ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>{editing ? "Editar investimento" : "Novo investimento"}</h2><Link className="button secondary" href="/investimentos">Voltar</Link></div>
-          <form className="form grid grid-2" action={upsertInvestment}>
-            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
-            <Input label="Tipo" name="type" defaultValue={editing?.type ?? ""} required />
-            <Input label="Instituicao" name="institution" defaultValue={editing?.institution ?? ""} required />
-            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
-            <Input label="Valor aplicado" name="amount" type="number" step="0.01" min="0.01" defaultValue={editing?.amount.toString() ?? ""} required />
-            <Input label="Data da aplicacao" name="applicationDate" type="date" defaultValue={editing?.applicationDate.toISOString().slice(0, 10) ?? ""} required />
-            <Input label="Data de vencimento" name="maturityDate" type="date" defaultValue={editing?.maturityDate?.toISOString().slice(0, 10) ?? ""} />
-            <Input label="Rentabilidade" name="profitability" defaultValue={editing?.profitability ?? ""} />
-            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
-            <Textarea label="Observacao" name="notes" defaultValue={editing?.notes ?? ""} />
-            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
-          </form>
-        </section>
-      ) : null}
     </>
   );
 }

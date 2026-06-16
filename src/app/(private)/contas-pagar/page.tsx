@@ -35,6 +35,64 @@ export default async function PayablesPage({ searchParams }: PageProps) {
   const paid = accounts.filter((item) => item.paid).reduce((sum, item) => sum + Number(item.amount), 0);
   const pending = total - paid;
 
+  if (viewing) {
+    return (
+      <>
+        <div className="header"><div><h1>Contas a pagar</h1><p className="muted">Controle mensal de despesas pagas e pendentes.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>Visualizar conta</h2><Link className="button secondary" href={`/contas-pagar?mes=${selectedMonth}`}>Voltar</Link></div>
+          <div className="detail-grid">
+            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
+            <div className="detail-item"><span>Data da despesa</span><strong>{formatDate(viewing.expenseDate)}</strong></div>
+            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
+            <div className="detail-item"><span>Despesa vinculada</span><strong>{viewing.expense?.description ?? "-"}</strong></div>
+            <div className="detail-item"><span>Valor</span><strong>{formatCurrency(viewing.amount.toString())}</strong></div>
+            <div className="detail-item"><span>Status</span><strong>{viewing.paid ? "Pago" : "Pendente"}</strong></div>
+            <div className="detail-item"><span>Data de pagamento</span><strong>{formatDate(viewing.paymentDate)}</strong></div>
+            <div className="detail-item"><span>Observacao</span><strong>{viewing.notes ?? "-"}</strong></div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (showForm) {
+    return (
+      <>
+        <div className="header"><div><h1>Contas a pagar</h1><p className="muted">Controle mensal de despesas pagas e pendentes.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar">
+            <h2>{editing ? "Editar conta" : "Novo lancamento"}</h2>
+            <div className="actions">
+              {editing ? (
+                <form action={markPayable}>
+                  <input type="hidden" name="id" value={editing.id} />
+                  <input type="hidden" name="referenceMonth" value={selectedMonth} />
+                  <input type="hidden" name="paid" value={String(!editing.paid)} />
+                  <Button type="submit" variant="secondary">{editing.paid ? "Marcar nao pago" : "Marcar pago"}</Button>
+                </form>
+              ) : null}
+              <Link className="button secondary" href={`/contas-pagar?mes=${selectedMonth}`}>Voltar</Link>
+            </div>
+          </div>
+          <form className="form grid grid-2" action={upsertPayableAccount}>
+            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
+            <input type="hidden" name="referenceMonth" value={selectedMonth} />
+            <Input label="Data da despesa" name="expenseDate" type="date" defaultValue={editing?.expenseDate.toISOString().slice(0, 10) ?? ""} required />
+            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
+            <Select label="Despesa vinculada" name="expenseId" defaultValue={editing?.expenseId ?? ""} options={[{ value: "", label: "Sem vinculo" }, ...expenses.map((item) => ({ value: item.id, label: item.description }))]} />
+            {editing ? null : <Input label="Ou nova despesa" name="newExpenseDescription" />}
+            <Input label="Valor" name="amount" type="number" step="0.01" min="0.01" defaultValue={editing?.amount.toString() ?? ""} required />
+            <Select label="Pago" name="paid" defaultValue={String(editing?.paid ?? false)} options={[{ value: "false", label: "Nao" }, { value: "true", label: "Sim" }]} />
+            <Input label="Data de pagamento" name="paymentDate" type="date" defaultValue={editing?.paymentDate?.toISOString().slice(0, 10) ?? ""} />
+            <Textarea label="Observacao" name="notes" defaultValue={editing?.notes ?? ""} />
+            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
+          </form>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="header"><div><h1>Contas a pagar</h1><p className="muted">Controle mensal de despesas pagas e pendentes.</p></div></div>
@@ -72,52 +130,6 @@ export default async function PayablesPage({ searchParams }: PageProps) {
           </table>
         </div>
       </section>
-      {viewing ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>Visualizar conta</h2><Link className="button secondary" href={`/contas-pagar?mes=${selectedMonth}`}>Voltar</Link></div>
-          <div className="detail-grid">
-            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
-            <div className="detail-item"><span>Data da despesa</span><strong>{formatDate(viewing.expenseDate)}</strong></div>
-            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
-            <div className="detail-item"><span>Despesa vinculada</span><strong>{viewing.expense?.description ?? "-"}</strong></div>
-            <div className="detail-item"><span>Valor</span><strong>{formatCurrency(viewing.amount.toString())}</strong></div>
-            <div className="detail-item"><span>Status</span><strong>{viewing.paid ? "Pago" : "Pendente"}</strong></div>
-            <div className="detail-item"><span>Data de pagamento</span><strong>{formatDate(viewing.paymentDate)}</strong></div>
-            <div className="detail-item"><span>Observacao</span><strong>{viewing.notes ?? "-"}</strong></div>
-          </div>
-        </section>
-      ) : null}
-      {showForm ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar">
-            <h2>{editing ? "Editar conta" : "Novo lancamento"}</h2>
-            <div className="actions">
-              {editing ? (
-                <form action={markPayable}>
-                  <input type="hidden" name="id" value={editing.id} />
-                  <input type="hidden" name="referenceMonth" value={selectedMonth} />
-                  <input type="hidden" name="paid" value={String(!editing.paid)} />
-                  <Button type="submit" variant="secondary">{editing.paid ? "Marcar nao pago" : "Marcar pago"}</Button>
-                </form>
-              ) : null}
-              <Link className="button secondary" href={`/contas-pagar?mes=${selectedMonth}`}>Voltar</Link>
-            </div>
-          </div>
-          <form className="form grid grid-2" action={upsertPayableAccount}>
-            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
-            <input type="hidden" name="referenceMonth" value={selectedMonth} />
-            <Input label="Data da despesa" name="expenseDate" type="date" defaultValue={editing?.expenseDate.toISOString().slice(0, 10) ?? ""} required />
-            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
-            <Select label="Despesa vinculada" name="expenseId" defaultValue={editing?.expenseId ?? ""} options={[{ value: "", label: "Sem vinculo" }, ...expenses.map((item) => ({ value: item.id, label: item.description }))]} />
-            {editing ? null : <Input label="Ou nova despesa" name="newExpenseDescription" />}
-            <Input label="Valor" name="amount" type="number" step="0.01" min="0.01" defaultValue={editing?.amount.toString() ?? ""} required />
-            <Select label="Pago" name="paid" defaultValue={String(editing?.paid ?? false)} options={[{ value: "false", label: "Nao" }, { value: "true", label: "Sim" }]} />
-            <Input label="Data de pagamento" name="paymentDate" type="date" defaultValue={editing?.paymentDate?.toISOString().slice(0, 10) ?? ""} />
-            <Textarea label="Observacao" name="notes" defaultValue={editing?.notes ?? ""} />
-            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
-          </form>
-        </section>
-      ) : null}
     </>
   );
 }

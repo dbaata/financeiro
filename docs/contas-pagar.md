@@ -26,7 +26,7 @@ Total do mes soma todas as contas do mes. Total pago soma contas pagas. Total pe
 
 Filtrar por mes, texto e status, listar contas em grid inicial, criar, editar, excluir logicamente, marcar como paga, marcar como nao paga e duplicar mes anterior.
 
-As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
+As telas de criacao, edicao e visualizacao sao abertas por parametro de URL (`acao=novo`, `editar=<id>` ou `visualizar=<id>`) em uma tela propria, sem exibir filtros, totais e lista acima do formulario ou detalhe.
 
 ## Implementacao
 

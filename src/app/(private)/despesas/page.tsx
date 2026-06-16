@@ -26,6 +26,39 @@ export default async function ExpensesPage({ searchParams }: PageProps) {
     return matchesSearch && matchesStatus;
   });
 
+  if (viewing) {
+    return (
+      <>
+        <div className="header"><div><h1>Despesas</h1><p className="muted">Mantenha o cadastro usado nas contas a pagar.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>Visualizar despesa</h2><Link className="button secondary" href="/despesas">Voltar</Link></div>
+          <div className="detail-grid">
+            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
+            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
+            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativa" : "Inativa"}</strong></div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (showForm) {
+    return (
+      <>
+        <div className="header"><div><h1>Despesas</h1><p className="muted">Mantenha o cadastro usado nas contas a pagar.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>{editing ? "Editar despesa" : "Nova despesa"}</h2><Link className="button secondary" href="/despesas">Voltar</Link></div>
+          <form className="form grid grid-2" action={upsertExpense}>
+            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
+            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
+            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
+            <Button type="submit">Salvar</Button>
+          </form>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="header"><div><h1>Despesas</h1><p className="muted">Mantenha o cadastro usado nas contas a pagar.</p></div></div>
@@ -56,27 +89,6 @@ export default async function ExpensesPage({ searchParams }: PageProps) {
           </table>
         </div>
       </section>
-      {viewing ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>Visualizar despesa</h2><Link className="button secondary" href="/despesas">Voltar</Link></div>
-          <div className="detail-grid">
-            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
-            <div className="detail-item"><span>Descricao</span><strong>{viewing.description}</strong></div>
-            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativa" : "Inativa"}</strong></div>
-          </div>
-        </section>
-      ) : null}
-      {showForm ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>{editing ? "Editar despesa" : "Nova despesa"}</h2><Link className="button secondary" href="/despesas">Voltar</Link></div>
-          <form className="form grid grid-2" action={upsertExpense}>
-            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
-            <Input label="Descricao" name="description" defaultValue={editing?.description ?? ""} required />
-            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
-            <Button type="submit">Salvar</Button>
-          </form>
-        </section>
-      ) : null}
     </>
   );
 }

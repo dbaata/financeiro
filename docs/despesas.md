@@ -20,7 +20,7 @@ Contas a pagar podem apontar para uma despesa cadastrada ou criar uma nova despe
 
 Listar em grid inicial com filtros por texto e situacao, criar, editar e inativar despesas pela acao da linha. A inativacao preserva contas historicas vinculadas.
 
-As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
+As telas de criacao, edicao e visualizacao sao abertas por parametro de URL (`acao=novo`, `editar=<id>` ou `visualizar=<id>`) em uma tela propria, sem exibir filtros e lista acima do formulario ou detalhe.
 
 ## Implementacao
 

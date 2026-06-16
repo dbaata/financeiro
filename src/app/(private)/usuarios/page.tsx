@@ -26,6 +26,44 @@ export default async function UsersPage({ searchParams }: PageProps) {
     return matchesSearch && matchesStatus;
   });
 
+  if (viewing) {
+    return (
+      <>
+        <div className="header"><div><h1>Usuarios</h1><p className="muted">Cadastre acessos e controle usuarios ativos.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>Visualizar usuario</h2><Link className="button secondary" href="/usuarios">Voltar</Link></div>
+          <div className="detail-grid">
+            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
+            <div className="detail-item"><span>Login</span><strong>{viewing.login}</strong></div>
+            <div className="detail-item"><span>Nome</span><strong>{viewing.name}</strong></div>
+            <div className="detail-item"><span>E-mail</span><strong>{viewing.email}</strong></div>
+            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativo" : "Inativo"}</strong></div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (showForm) {
+    return (
+      <>
+        <div className="header"><div><h1>Usuarios</h1><p className="muted">Cadastre acessos e controle usuarios ativos.</p></div></div>
+        <section className="panel">
+          <div className="table-toolbar"><h2>{editing ? "Editar usuario" : "Novo usuario"}</h2><Link className="button secondary" href="/usuarios">Voltar</Link></div>
+          <form className="form grid grid-2" action={upsertUser}>
+            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
+            <Input label="Login" name="login" defaultValue={editing?.login ?? ""} required />
+            <Input label="Nome" name="name" defaultValue={editing?.name ?? ""} required />
+            <Input label="E-mail" name="email" type="email" defaultValue={editing?.email ?? ""} required />
+            <Input label={editing ? "Nova senha" : "Senha"} name="password" type="password" required={!editing} />
+            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
+            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
+          </form>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="header"><div><h1>Usuarios</h1><p className="muted">Cadastre acessos e controle usuarios ativos.</p></div></div>
@@ -56,32 +94,6 @@ export default async function UsersPage({ searchParams }: PageProps) {
           </table>
         </div>
       </section>
-      {viewing ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>Visualizar usuario</h2><Link className="button secondary" href="/usuarios">Voltar</Link></div>
-          <div className="detail-grid">
-            <div className="detail-item"><span>Codigo</span><strong>{viewing.code}</strong></div>
-            <div className="detail-item"><span>Login</span><strong>{viewing.login}</strong></div>
-            <div className="detail-item"><span>Nome</span><strong>{viewing.name}</strong></div>
-            <div className="detail-item"><span>E-mail</span><strong>{viewing.email}</strong></div>
-            <div className="detail-item"><span>Situacao</span><strong>{viewing.status === "ACTIVE" ? "Ativo" : "Inativo"}</strong></div>
-          </div>
-        </section>
-      ) : null}
-      {showForm ? (
-        <section className="panel" style={{ marginTop: 16 }}>
-          <div className="table-toolbar"><h2>{editing ? "Editar usuario" : "Novo usuario"}</h2><Link className="button secondary" href="/usuarios">Voltar</Link></div>
-          <form className="form grid grid-2" action={upsertUser}>
-            {editing ? <input type="hidden" name="id" value={editing.id} /> : null}
-            <Input label="Login" name="login" defaultValue={editing?.login ?? ""} required />
-            <Input label="Nome" name="name" defaultValue={editing?.name ?? ""} required />
-            <Input label="E-mail" name="email" type="email" defaultValue={editing?.email ?? ""} required />
-            <Input label={editing ? "Nova senha" : "Senha"} name="password" type="password" required={!editing} />
-            <Select label="Situacao" name="status" defaultValue={editing?.status ?? "ACTIVE"} options={statusOptions} />
-            <div className="field actions-field"><Button type="submit">Salvar</Button></div>
-          </form>
-        </section>
-      ) : null}
     </>
   );
 }

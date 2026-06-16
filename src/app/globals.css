@@ -40,6 +40,12 @@ textarea {
   display: grid;
   place-items: center;
   padding: 24px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.14), transparent 30%),
+    radial-gradient(circle at 88% 16%, rgba(37, 99, 235, 0.14), transparent 32%),
+    linear-gradient(135deg, #f8fbff 0%, #edf4fb 52%, #f7fbff 100%);
 }
 
 .auth-box,
@@ -51,8 +57,199 @@ textarea {
 }
 
 .auth-box {
-  width: min(420px, 100%);
-  padding: 28px;
+  max-width: 640px;
+  padding: 42px min(8vw, 96px);
+  position: relative;
+  width: calc(100vw - 48px);
+  z-index: 1;
+  border: 1px solid rgba(214, 224, 238, 0.8);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(30, 64, 105, 0.16);
+}
+
+.auth-bg-shape {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 48px rgba(37, 99, 235, 0.05);
+}
+
+.auth-bg-shape-left {
+  bottom: -180px;
+  left: -170px;
+  height: 420px;
+  width: 560px;
+}
+
+.auth-bg-shape-right {
+  right: -160px;
+  top: -210px;
+  height: 520px;
+  width: 420px;
+}
+
+.auth-brand {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.auth-brand h1 {
+  color: #2563eb;
+  font-size: 44px;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.auth-kicker {
+  color: #14b8a6;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.auth-hero {
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  height: auto;
+  max-width: 270px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.login-form {
+  gap: 14px;
+}
+
+.login-field {
+  align-items: center;
+  border: 1px solid #d6deea;
+  border-radius: 6px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 22px 1fr auto;
+  min-height: 48px;
+  padding: 0 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-field:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.16);
+}
+
+.login-field > svg,
+.login-icon-button svg,
+.auth-secure svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.login-field > svg {
+  color: #667085;
+  height: 20px;
+  width: 20px;
+}
+
+.login-field input {
+  border: 0;
+  color: var(--text);
+  min-width: 0;
+  outline: 0;
+  padding: 12px 0;
+}
+
+.login-field input::placeholder {
+  color: #1f2937;
+}
+
+.login-icon-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #667085;
+  cursor: pointer;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  padding: 0;
+  width: 34px;
+}
+
+.login-icon-button svg {
+  height: 20px;
+  width: 20px;
+}
+
+.forgot-link {
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: 600;
+  justify-self: end;
+  margin: -2px 0 10px;
+}
+
+.login-submit {
+  min-height: 48px;
+  background: linear-gradient(180deg, #1683f7 0%, #0872df 100%);
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.login-submit:hover {
+  background: linear-gradient(180deg, #0f75df 0%, #075db8 100%);
+}
+
+.login-submit:disabled {
+  cursor: wait;
+  opacity: 0.74;
+}
+
+.auth-secure {
+  align-items: center;
+  color: #667085;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr auto 1fr;
+  margin-top: 30px;
+}
+
+.auth-secure span {
+  background: #d9e0ea;
+  height: 1px;
+}
+
+.auth-secure strong {
+  align-items: center;
+  display: inline-flex;
+  font-size: 13px;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.auth-secure svg {
+  color: #64748b;
+  height: 16px;
+  width: 16px;
+}
+
+.sr-only {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  clip: rect(0, 0, 0, 0);
 }
 
 .app-shell {
@@ -332,5 +529,18 @@ th {
   .table-toolbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .auth-box {
+    width: calc(100vw - 32px);
+    padding: 32px 22px;
+  }
+
+  .auth-brand h1 {
+    font-size: 36px;
+  }
+
+  .auth-hero {
+    max-width: 230px;
   }
 }

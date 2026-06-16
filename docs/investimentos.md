@@ -12,7 +12,7 @@ Codigo, tipo de investimento, instituicao, descricao, valor aplicado, data da ap
 
 Listar em grid inicial com filtros por texto e situacao, criar, editar e excluir logicamente investimentos pela acao da linha. O dashboard mostra quantidade de investimentos ativos e valor aplicado total.
 
-As telas de criacao e edicao sao abertas por parametro de URL (`acao=novo` ou `editar=<id>`), mantendo o grid como entrada do modulo.
+As telas de criacao, edicao e visualizacao sao abertas por parametro de URL (`acao=novo`, `editar=<id>` ou `visualizar=<id>`) em uma tela propria, sem exibir filtros e lista acima do formulario ou detalhe.
 
 ## Evolucoes futuras
 

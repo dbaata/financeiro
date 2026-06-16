@@ -18,7 +18,7 @@ Rotas privadas sao marcadas como dinamicas para evitar consultas ao banco durant
 
 ## Fluxo
 
-O usuario acessa `/login`, informa login e senha, e o Auth.js valida o hash armazenado. O `proxy.ts` protege as rotas privadas. Dentro da area privada, o usuario navega por dashboard, usuarios, despesas, contas a pagar e investimentos.
+O usuario acessa `/login`, informa login e senha, e o Auth.js valida o hash armazenado. O `proxy.ts` protege as rotas privadas e libera assets publicos usados na autenticacao, como imagens de `/images`. Dentro da area privada, o usuario navega por dashboard, usuarios, despesas, contas a pagar e investimentos.
 
 Todos os modulos privados seguem o mesmo fluxo de navegacao: a primeira tela e sempre um grid de listagem com filtros padroes do dominio. A partir do grid, o usuario escolhe inserir, editar, excluir ou abrir detalhes. Telas de detalhe, criacao e edicao nao devem ser a entrada inicial do modulo.
 
